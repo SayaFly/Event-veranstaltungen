@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event-Veranstaltungen</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <h1>🎉 Event-Veranstaltungen</h1>
+      <p class="subtitle">Veranstaltungsmanagement leicht gemacht</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Controls bar -->
+    <div class="controls">
+      <div class="search-filter">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Veranstaltungen suchen…"
+          aria-label="Veranstaltungen suchen"
+        />
+        <select id="category-filter" aria-label="Kategorie filtern">
+          <option value="">Alle Kategorien</option>
+          <option value="Konzert">Konzert</option>
+          <option value="Konferenz">Konferenz</option>
+          <option value="Sport">Sport</option>
+          <option value="Messe">Messe</option>
+          <option value="Festival">Festival</option>
+          <option value="Workshop">Workshop</option>
+          <option value="Sonstiges">Sonstiges</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" id="open-modal-btn">
+        + Neue Veranstaltung
+      </button>
+    </div>
+
+    <!-- Event grid -->
+    <div id="events-grid" class="events-grid" aria-live="polite">
+      <!-- Event cards injected here -->
+    </div>
+
+    <p id="empty-state" class="empty-state" hidden>
+      Keine Veranstaltungen gefunden. Füge deine erste Veranstaltung hinzu!
+    </p>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modal-title">Neue Veranstaltung</h2>
+        <button class="btn-icon" id="close-modal-btn" aria-label="Modal schließen">✕</button>
+      </div>
+      <form id="event-form" novalidate>
+        <input type="hidden" id="edit-id" />
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="event-title">Titel <span class="required">*</span></label>
+            <input type="text" id="event-title" placeholder="z. B. Sommerfestival" required />
+            <span class="field-error" id="title-error"></span>
+          </div>
+          <div class="form-group">
+            <label for="event-category">Kategorie</label>
+            <select id="event-category">
+              <option value="Sonstiges">Sonstiges</option>
+              <option value="Konzert">Konzert</option>
+              <option value="Konferenz">Konferenz</option>
+              <option value="Sport">Sport</option>
+              <option value="Messe">Messe</option>
+              <option value="Festival">Festival</option>
+              <option value="Workshop">Workshop</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="event-date">Datum <span class="required">*</span></label>
+            <input type="date" id="event-date" required />
+            <span class="field-error" id="date-error"></span>
+          </div>
+          <div class="form-group">
+            <label for="event-time">Uhrzeit</label>
+            <input type="time" id="event-time" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="event-location">Ort</label>
+          <input type="text" id="event-location" placeholder="z. B. Berlin, Hauptbahnhof" />
+        </div>
+
+        <div class="form-group">
+          <label for="event-description">Beschreibung</label>
+          <textarea id="event-description" rows="3" placeholder="Kurze Beschreibung der Veranstaltung…"></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancel-btn">Abbrechen</button>
+          <button type="submit" class="btn btn-primary" id="save-btn">Speichern</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete confirmation dialog -->
+  <div id="confirm-overlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="confirm-title" hidden>
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h2 id="confirm-title">Veranstaltung löschen?</h2>
+      </div>
+      <p>Diese Aktion kann nicht rückgängig gemacht werden.</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="confirm-cancel-btn">Abbrechen</button>
+        <button class="btn btn-danger" id="confirm-delete-btn">Löschen</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
